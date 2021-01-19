@@ -31,13 +31,7 @@ jobs:
       with:
          # Yarn command
          cmd: install #Setting up dependencies for our react app by installing yarn
-    - name: Installing material-ui/corre
-      run: sudo CI=false npm install @material-ui/core
-    - name: Installing material-ui icons
-      run: sudo CI=false npm install @material-ui/icons
-    - name: Installing Chart.js
-      run: sudo CI=false npm install --save react-chartjs-2 chart.js
-    - name: Making it readable for browser, as it is almost impossible right now
+    - name: Bulding...
       
       run: CI=false yarn build
 
@@ -46,4 +40,4 @@ jobs:
     - name: Installing Surge
       run: sudo npm install -g surge
     - name: Deploying....
-      run: sudo surge ./build https://my-project-covid-19-Tracker.surge.sh --token ${{secrets.SURGE_KEY}}
+      run: sudo surge ./build https://project-4a-red-queen-and-alice.surge.sh --token ${{secrets.SURGE_KEY}}
