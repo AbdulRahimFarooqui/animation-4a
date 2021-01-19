@@ -1,0 +1,49 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Runs a single command using the runners shell
+    - name: Installing NodeJS
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: 12 
+    - name: GitHub Action for Yarn
+      uses: borales/actions-yarn@v2.0.0
+      with:
+         # Yarn command
+         cmd: install #Setting up dependencies for our react app by installing yarn
+    - name: Installing material-ui/corre
+      run: sudo CI=false npm install @material-ui/core
+    - name: Installing material-ui icons
+      run: sudo CI=false npm install @material-ui/icons
+    - name: Installing Chart.js
+      run: sudo CI=false npm install --save react-chartjs-2 chart.js
+    - name: Making it readable for browser, as it is almost impossible right now
+      
+      run: CI=false yarn build
+
+
+    # Runs a set of commands using the runners shell
+    - name: Installing Surge
+      run: sudo npm install -g surge
+    - name: Deploying....
+      run: sudo surge ./build https://my-project-covid-19-Tracker.surge.sh --token ${{secrets.SURGE_KEY}}
